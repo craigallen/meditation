@@ -122,19 +122,19 @@ const Home = () => {
   };
 
   return (
-    <div style={styles.container}>
+    <div className="container text-center d-flex flex-column justify-content-center align-items-center vh-100 bg-light">
       <h4>
         {isPlaying ? (isPaused ? 'Meditation is paused' : 'Meditation is playing') : 'Welcome to Meditation'}
       </h4>
-      <div style={{ margin: '10px' }}>
-        <button onClick={handleLibraryClick}>Go to Library</button>
+      <div className="my-3">
+        <button className="btn btn-primary" onClick={handleLibraryClick}>Go to Library</button>
       </div>
       {currentSong && <h5>Current Song: {currentSong.name}</h5>}
       <input
         type="number"
         value={duration}
         onChange={handleDurationChange}
-        style={{ marginBottom: '10px' }}
+        className="form-control my-3"
         disabled={isPlaying}
         placeholder="Duration (minutes)"
       />
@@ -143,21 +143,21 @@ const Home = () => {
           Time remaining: {Math.floor(timeRemaining / 60)}:{('0' + (timeRemaining % 60)).slice(-2)}
         </h6>
       )}
-      <button onClick={isPlaying ? (isPaused ? resumeSound : pauseSound) : playSound} disabled={!currentSong}>
+      <button className="btn btn-success my-3" onClick={isPlaying ? (isPaused ? resumeSound : pauseSound) : playSound} disabled={!currentSong}>
         {isPlaying ? (isPaused ? 'Resume' : 'Pause') : 'Play'}
       </button>
       {sessionEnded && (
-        <div style={{ marginTop: '20px' }}>
-          <button onClick={playSound}>
+        <div className="my-3">
+          <button className="btn btn-warning" onClick={playSound}>
             Continue
           </button>
-          <button onClick={restartSession} style={{ marginLeft: '10px' }}>
+          <button className="btn btn-danger ms-2" onClick={restartSession}>
             Restart
           </button>
         </div>
       )}
-      <div style={{ marginTop: '20px' }}>
-        <label htmlFor="volume-control">Volume: </label>
+      <div className="my-3">
+        <label htmlFor="volume-control" className="form-label">Volume: </label>
         <input
           id="volume-control"
           type="range"
@@ -166,22 +166,11 @@ const Home = () => {
           step="0.01"
           value={volume}
           onChange={handleVolumeChange}
+          className="form-range"
         />
       </div>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100vh',
-    textAlign: 'center',
-    backgroundColor: '#e0f7fa', // Pastel color
-  }
 };
 
 export default Home;
