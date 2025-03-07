@@ -45,15 +45,19 @@ const Home = () => {
         audioRef.current = new Audio(process.env.PUBLIC_URL + currentSong.file); // Use selected song file
         audioRef.current.volume = volume; // Set initial volume
         audioRef.current.play();
+        audioRef.current.onloadedmetadata = () => {
+          if (duration === 0) {
+            setTimeRemaining(audioRef.current.duration); // Set time remaining to full song duration
+          }
+        };
       } else {
         audioRef.current.play();
       }
       setIsPlaying(true);
       setIsPaused(false);
       setSessionEnded(false);
-      setTimeRemaining(duration * 60); // Set time remaining in seconds
-
       if (duration > 0) {
+        setTimeRemaining(duration * 60); // Set time remaining in seconds
         timerRef.current = setTimeout(() => {
           audioRef.current.pause();
           setIsPlaying(false);
@@ -61,11 +65,11 @@ const Home = () => {
           setSessionEnded(true);
           clearInterval(countdownRef.current);
         }, duration * 60000); // Convert minutes to milliseconds
-
-        countdownRef.current = setInterval(() => {
-          setTimeRemaining((prev) => prev - 1);
-        }, 1000);
       }
+
+      countdownRef.current = setInterval(() => {
+        setTimeRemaining((prev) => prev - 1);
+      }, 1000);
     }
   };
 
@@ -92,11 +96,11 @@ const Home = () => {
         setSessionEnded(true);
         clearInterval(countdownRef.current);
       }, timeRemaining * 1000); // Use remaining time in milliseconds
-
-      countdownRef.current = setInterval(() => {
-        setTimeRemaining((prev) => prev - 1);
-      }, 1000);
     }
+
+    countdownRef.current = setInterval(() => {
+      setTimeRemaining((prev) => prev - 1);
+    }, 1000);
   };
 
   const restartSession = () => {
