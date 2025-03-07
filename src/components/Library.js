@@ -7,7 +7,6 @@ const Library = () => {
   const songs = [
     { name: 'November', file: '/november.wav' },
     { name: 'Guitar', file: '/guitar.wav' },
-    { name: 'Empty', file: '/song3.wav' },
   ];
 
   const handleSongClick = (song) => {
